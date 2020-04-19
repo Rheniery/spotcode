@@ -19,10 +19,11 @@ Rails.application.routes.draw do
       resources :albums, only: :show do
         resources :recently_heards, only: :create
       end
+      resources :favorites, only: :index
       resources :songs, only: [] do
         concerns :favoritable, favoritable_type: 'Song'
       end 
-      resources :favorites, only: :index
     end
   end
+    get "*path", to: "home#index", :constraints => lambda{|req| req.path !~ /\.(png|jpg|js|css|json)$/ }
 end
